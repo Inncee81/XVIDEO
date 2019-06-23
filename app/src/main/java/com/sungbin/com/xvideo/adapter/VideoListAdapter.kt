@@ -1,6 +1,7 @@
 package com.sungbin.com.xvideo.adapter
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -12,19 +13,22 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.sungbin.com.xvideo.R
 import com.sungbin.com.xvideo.dto.VideoListItem
 import java.io.ByteArrayOutputStream
 
 
 class VideoListAdapter(private val list: ArrayList<VideoListItem>?,
-                          private val act: Activity
+                       private val act: Activity
 ) :
     RecyclerView.Adapter<VideoListAdapter.VideoViewHolder>() {
 
     inner class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var title: TextView = view.findViewById(R.id.title)
+        var thumbnail: ImageView = view.findViewById(R.id.thumbnail)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): VideoViewHolder {
@@ -34,7 +38,9 @@ class VideoListAdapter(private val list: ArrayList<VideoListItem>?,
 
     override fun onBindViewHolder(@NonNull viewholder: VideoViewHolder, position: Int) {
         val name = list!![position].name
-
+        var thumb = list[position].link
+        Glide.with(act).load(thumb).into(viewholder.thumbnail)
+        viewholder.title.text = name
     }
 
     override fun getItemCount(): Int {

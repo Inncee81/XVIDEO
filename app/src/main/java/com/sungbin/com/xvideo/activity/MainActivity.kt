@@ -12,9 +12,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import com.sungbin.com.xvideo.R
 import com.sungbin.com.xvideo.adapter.VideoListAdapter
 import com.sungbin.com.xvideo.dto.VideoListItem
+import com.sungbin.com.xvideo.utils.HTML
 import com.sungbin.com.xvideo.utils.Utils
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.ArrayList
@@ -30,9 +32,29 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         items = ArrayList()
-        items!!.add(VideoListItem("테스트", "테스트"))
-        items!!.add(VideoListItem("테스트2", "테스트2"))
-        items!!.add(VideoListItem("테스트3", "테스트3"))
+
+        val cut1 = "<div class=\"thumb\">"
+        val cut2 = "</div>"
+
+        val test = HTML.get("https://xvideos.com").split("mozaique")[2]
+            .split("subscriptions")[0].split("pagination")[0]
+
+        /*
+        <a href="/video43926665/11449435/0/outdoor_blowjob_and_fuck">
+        <img src="https://static-egc.xvideos-cdn.com/img/lightbox/lightbox-blank.gif"
+        data-src="https://img-hw.xvideos-cdn.com/videos/thumbs169/d9/f3/3d/d9f33d7f0a5c58e0495cc79d6a8c5bfa/d9f33d7f0a5c58e0495cc79d6a8c5bfa.16.jpg"
+        data-idcdn="2" data-videoid="43926665" id="pic_43926665" /></a>
+         */
+
+        for(i in 1 until test.split(cut1).size){
+            val cash = test.split(cut1)[i].split(cut2)[0]
+            val cutInt = cash.split("href=\"")[1].split("\"")[0].split("/").size - 1
+            val pic = cash.split("data-src=\"")[1].split("\"")[0]
+            val name = cash.split("href=\"")[1].split("\"")[0].split("/")[cutInt]
+            Log.d("TTT", name + "\n" + pic)
+            items!!.add(VideoListItem(name, pic))
+        }
+
         val adapter = VideoListAdapter(items, this)
         video_list.adapter = adapter
         video_list.layoutManager = LinearLayoutManager(this)

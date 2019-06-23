@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -10,9 +11,17 @@
         cardview:cardCornerRadius="20dp">
 
     <TextView android:id="@+id/title"
+              android:background="@color/colorAccent"
+              android:textColor="#fff"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="50dp"
               android:text="@string/app_name"
               android:gravity="center"/>
+
+    <ImageView
+            android:layout_marginTop="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/thumbnail"/>
 
 </android.support.v7.widget.CardView>
